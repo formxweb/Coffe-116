@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hocaoğlu · Fırın · Pasta · Cafe</title>
+<meta name="description" content="Hocaoğlu Bakery & Coffee — fırından çıkmış lezzetler, günlük taze pastalar, unlu mamüller ve kahve molası. Özel gün pastası siparişi WhatsApp'tan.">
+<meta name="theme-color" content="#120d09">
+<meta property="og:title" content="Hocaoğlu · Fırın · Pasta · Cafe">
+<meta property="og:description" content="Fırından çıkmış lezzetler, günlük taze pasta ve bir kahve molası.">
+<meta property="og:image" content="assets/img/logo.webp">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#120d09;--cocoa:#1c140e;--cocoa2:#251a12;--line:rgba(232,200,160,.14);
+  --cream:#f4ead9;--cream2:#ead9bf;--paper:#f8f1e4;
+  --bronze:#b98454;--gold:#dcae6f;--gold2:#a8723f;--muted:#b8a58c;--dim:#8a7862;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.22,.8,.2,1);--r:18px;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.menu-open{overflow:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+@media(max-width:600px){.wrap{width:calc(100% - 36px)}}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* type */
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.2vw,64px);line-height:1.04;letter-spacing:-.02em;font-variation-settings:"opsz" 120}
+.h2 em{font-style:italic;color:var(--gold);font-weight:300}
+.lead{color:var(--muted);font-size:clamp(16px,1.6vw,18px);max-width:52ch}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 26px;border-radius:999px;font-weight:600;font-size:15px;letter-spacing:.01em;transition:transform .35s var(--ease),background .35s,color .35s,box-shadow .35s;white-space:nowrap;cursor:pointer;border:0}
+.btn svg{width:18px;height:18px;flex:none}
+.btn--gold{background:linear-gradient(135deg,#e7bb7c,#b98454 55%,#a06a3a);color:#1a110a;box-shadow:0 10px 30px -10px rgba(220,174,111,.55)}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px rgba(220,174,111,.7)}
+.btn--ghost{background:rgba(244,234,217,.06);color:var(--cream);border:1px solid rgba(244,234,217,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn--ghost:hover{background:rgba(244,234,217,.14)}
+.btn--dark{background:var(--ink);color:var(--cream)}
+.btn--dark:hover{transform:translateY(-2px)}
+.btn--sm{height:42px;padding:0 18px;font-size:14px}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:200;background:var(--ink);display:grid;place-items:center;transition:opacity .8s var(--ease),visibility .8s}
+.loader.done{opacity:0;visibility:hidden}
+.loader__box{text-align:center}
+.loader__logo{width:92px;height:92px;margin:0 auto 22px;border-radius:50%;opacity:0;transform:scale(.85);animation:lpop .9s var(--ease) .05s forwards;box-shadow:0 0 60px rgba(220,174,111,.25)}
+.loader__mark{font-family:var(--serif);font-size:30px;letter-spacing:.32em;padding-left:.32em;color:var(--cream);display:flex;justify-content:center}
+.loader__mark span{display:inline-block;opacity:0;transform:translateY(14px);animation:lup .7s var(--ease) forwards}
+.loader__sub{margin-top:12px;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);opacity:0;animation:lfade .8s .6s forwards}
+@keyframes lup{to{opacity:1;transform:none}}@keyframes lfade{to{opacity:1}}@keyframes lpop{to{opacity:1;transform:none}}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;padding-top:env(safe-area-inset-top,0px);transition:background .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(18,13,9,.78);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-color:var(--line)}
+.nav__in{height:76px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand img{width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 1px rgba(220,174,111,.35)}
+.brand__word{font-family:var(--serif);font-size:22px;letter-spacing:.06em;line-height:1}
+.brand__sub{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.nav__links{display:flex;gap:30px;font-size:14px;color:rgba(244,234,217,.82)}
+.nav__links a{position:relative;padding:6px 0}
+.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.nav__links a:hover{color:var(--cream)}.nav__links a:hover::after{transform:scaleX(1);transform-origin:left}
+.burger{display:none;width:46px;height:46px;border-radius:50%;border:1px solid rgba(244,234,217,.25);background:rgba(18,13,9,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative;cursor:pointer}
+.burger i,.burger i::before,.burger i::after{position:absolute;left:50%;width:18px;height:1.5px;background:var(--cream);transform:translateX(-50%);transition:transform .35s var(--ease),opacity .2s}
+.burger i{top:50%}.burger i::before{content:"";top:-6px}.burger i::after{content:"";top:6px}
+.menu-open .burger i{background:transparent}
+.menu-open .burger i::before{transform:translateX(-50%) translateY(6px) rotate(45deg)}
+.menu-open .burger i::after{transform:translateX(-50%) translateY(-6px) rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:55;background:rgba(18,13,9,.97);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:100px 28px 40px;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s}
+.drawer.open{opacity:1;visibility:visible}
+.dl{font-family:var(--serif);font-size:40px;line-height:1.25;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding:10px 0;transform:translateY(20px);opacity:0;transition:transform .6s var(--ease),opacity .6s}
+.dl small{font-family:var(--sans);font-size:12px;color:var(--gold);letter-spacing:.2em}
+.drawer.open .dl{transform:none;opacity:1}
+.drawer.open .dl:nth-child(2){transition-delay:.05s}.drawer.open .dl:nth-child(3){transition-delay:.1s}.drawer.open .dl:nth-child(4){transition-delay:.15s}
+.drawer .btn{margin-top:28px}
+@media(max-width:900px){.nav__links,.nav__cta{display:none}.burger{display:block}.nav__in{height:68px}}
+
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden}
+.hero__media{position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 50% at 72% 38%,rgba(220,174,111,.28),transparent 70%),
+  radial-gradient(50% 60% at 20% 80%,rgba(168,114,63,.22),transparent 70%),
+  linear-gradient(160deg,#2a1d13,#120d09 70%)}
+.hero__fallback{position:absolute;right:-6vw;top:50%;width:min(62vw,720px);aspect-ratio:1;transform:translateY(-52%);border-radius:50%;opacity:.16;filter:saturate(.8);background:url(assets/img/logo.webp) center/cover;mask:radial-gradient(circle,#000 55%,transparent 72%);-webkit-mask:radial-gradient(circle,#000 55%,transparent 72%)}
+.hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s var(--ease)}
+.hero__bg.on{opacity:1}
+.hero.has-video .hero__fallback{display:none}
+.hero__shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,13,9,.6) 0%,rgba(18,13,9,.12) 18%,rgba(18,13,9,.5) 36%,rgba(18,13,9,.88) 60%,var(--ink) 100%)}
+@media(min-width:901px){.hero__shade{background:linear-gradient(90deg,rgba(18,13,9,.82) 0%,rgba(18,13,9,.45) 55%,rgba(18,13,9,.25) 100%),linear-gradient(180deg,rgba(18,13,9,.5) 0%,transparent 25%,transparent 60%,var(--ink) 100%)}}
+.hero__inner{width:min(1200px,100% - 48px);margin:0 auto;padding:140px 0 clamp(48px,9vh,96px);display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px}
+.hero__title{font-family:var(--serif);font-weight:350;font-size:clamp(48px,8.6vw,124px);line-height:.95;letter-spacing:-.035em;margin:22px 0 24px;font-variation-settings:"opsz" 144}
+.hero__title em{font-style:italic;font-weight:300;color:var(--gold)}
+.hero__title .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero__title .ln>span{display:block;transform:translateY(105%);transition:transform 1.1s var(--ease)}
+.ready .hero__title .ln>span{transform:none}
+.ready .hero__title .ln:nth-child(2)>span{transition-delay:.12s}
+.hero__lead{font-size:clamp(16px,1.7vw,19px);color:rgba(244,234,217,.84);max-width:44ch;margin-bottom:34px}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero__side{display:flex;flex-direction:column;align-items:flex-end;gap:18px;padding-bottom:6px}
+.badge{width:132px;height:132px;position:relative}
+.badge svg{width:100%;height:100%;animation:spin 22s linear infinite}
+.badge text{font-family:var(--sans);font-size:9.6px;letter-spacing:.3em;fill:var(--cream);text-transform:uppercase;font-weight:600}
+.badge img{position:absolute;inset:26px;width:80px;height:80px;border-radius:50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-cue{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(244,234,217,.6);display:flex;align-items:center;gap:10px}
+.scroll-cue i{width:1px;height:40px;background:linear-gradient(var(--gold),transparent);animation:cue 2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.fx{opacity:0;transform:translateY(18px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.ready .fx{opacity:1;transform:none}
+.ready .fx.d1{transition-delay:.35s}.ready .fx.d2{transition-delay:.5s}.ready .fx.d3{transition-delay:.65s}
+@media(max-width:900px){.hero__inner{grid-template-columns:1fr;padding-bottom:calc(110px + var(--safe-b))}.hero__side{display:none}.hero__fallback{width:110vw;right:-30vw;top:34%}}
+@media(max-width:600px){.hero__cta .btn{flex:1 1 100%}}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);background:var(--cocoa);overflow:hidden;padding:22px 0}
+.marquee__track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.marquee__track span{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.6vw,32px);color:var(--cream2);padding:0 28px;display:flex;align-items:center;gap:56px;white-space:nowrap}
+.marquee__track span::after{content:"✦";font-style:normal;font-size:14px;color:var(--gold)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* sections */
+.sec{padding:clamp(88px,12vw,150px) 0;position:relative}
+.sec__head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(44px,6vw,72px)}
+.sec__head .h2{margin-top:18px}
+@media(max-width:860px){.sec__head{grid-template-columns:1fr;gap:18px}}
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+/* story */
+.story{background:var(--ink)}
+.story__quote{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.9vw,50px);line-height:1.18;letter-spacing:-.015em;max-width:22ch}
+.story__quote em{color:var(--gold);font-style:italic}
+.story__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(40px,7vw,110px);align-items:start}
+.story__aside{padding-top:10px}
+.story__aside p{color:var(--muted);margin-bottom:22px}
+.est{display:flex;align-items:center;gap:18px;margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.est img{width:64px;height:64px;border-radius:50%}
+.est b{font-family:var(--serif);font-weight:400;font-size:22px;display:block;line-height:1.1}
+.est span{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(64px,8vw,100px)}
+.pillar{position:relative;padding:34px 30px 32px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(244,234,217,.035),rgba(244,234,217,0));overflow:hidden;transition:border-color .5s,transform .6s var(--ease)}
+.pillar:hover{border-color:rgba(220,174,111,.45);transform:translateY(-4px)}
+.pillar__n{font-size:12px;letter-spacing:.25em;color:var(--gold);font-weight:600}
+.pillar__ic{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(220,174,111,.35);color:var(--gold);margin:26px 0 22px}
+.pillar__ic svg{width:24px;height:24px}
+.pillar h3{font-family:var(--serif);font-weight:400;font-size:30px;margin-bottom:10px}
+.pillar p{color:var(--muted);font-size:15px}
+@media(max-width:860px){.story__grid,.pillars{grid-template-columns:1fr}}
+
+/* viral band */
+.viral{background:var(--cocoa);border-block:1px solid var(--line);overflow:hidden}
+.viral__in{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(28px,5vw,70px);align-items:center;padding:clamp(56px,8vw,92px) 0}
+.viral__num{font-family:var(--serif);font-weight:300;font-size:clamp(84px,14vw,190px);line-height:.85;letter-spacing:-.05em;background:linear-gradient(180deg,#f0c88f,#a8723f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.viral__num small{font-size:.38em;letter-spacing:0}
+.viral__txt h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,36px);line-height:1.15;margin-bottom:10px}
+.viral__txt p{color:var(--muted)}
+@media(max-width:860px){.viral__in{grid-template-columns:1fr;gap:18px}}
+
+/* showcase (cream) */
+.show{background:var(--paper);color:#24180f}
+.show .eyebrow{color:#9a6534}
+.show .h2 em{color:#9a6534}
+.show .lead{color:#6d5a46}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:38px}
+.tab{height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(36,24,15,.18);background:transparent;font-weight:600;font-size:14px;cursor:pointer;transition:background .3s,color .3s,border-color .3s;color:#24180f}
+.tab:hover{border-color:rgba(36,24,15,.45)}
+.tab[aria-selected=true]{background:#24180f;color:var(--paper);border-color:#24180f}
+.board{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,70px);align-items:start}
+.board__visual{position:sticky;top:110px;aspect-ratio:1;max-height:540px;border-radius:24px;overflow:hidden;background:#24180f;color:var(--cream)}
+.board__visual img,.board__visual video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.board__visual::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(18,13,9,0) 35%,rgba(18,13,9,.55) 60%,rgba(18,13,9,.92))}
+.board__cap{position:absolute;left:28px;right:28px;bottom:26px;z-index:2}
+.board__cap b{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3vw,40px);display:block;line-height:1.05}
+.board__cap span{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.board__visual img.photo{z-index:1;animation:phIn .7s var(--ease)}@keyframes phIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
+.board__art{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(70% 60% at 50% 40%,rgba(220,174,111,.35),transparent 70%),linear-gradient(160deg,#3a2818,#1a120b)}
+.board__art img{position:static;width:46%;height:auto;border-radius:50%;opacity:.9;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.list{border-top:1px solid rgba(36,24,15,.14)}
+.item{display:grid;grid-template-columns:1fr auto;gap:6px 18px;padding:22px 0;border-bottom:1px solid rgba(36,24,15,.14);opacity:0;transform:translateY(10px);animation:itemIn .6s var(--ease) forwards}
+.item h4{font-family:var(--serif);font-weight:450;font-size:23px;line-height:1.2;display:flex;align-items:baseline;gap:12px}
+.item p{grid-column:1/-1;color:#6d5a46;font-size:15px;max-width:48ch}
+.tag{align-self:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#9a6534;border:1px solid rgba(154,101,52,.35);border-radius:999px;padding:5px 11px;white-space:nowrap}
+@keyframes itemIn{to{opacity:1;transform:none}}
+.note{margin-top:26px;font-size:14px;color:#6d5a46;display:flex;gap:10px;align-items:center}
+.note a{font-weight:700;color:#24180f;border-bottom:1px solid currentColor}
+@media(max-width:860px){.board{grid-template-columns:1fr}.board__visual{position:relative;top:0;aspect-ratio:4/3}}
+
+/* order */
+.order{background:var(--ink)}
+.order__grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,6vw,90px);align-items:start}
+.steps{margin-top:40px;display:grid;gap:4px}
+.step{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.step b{font-family:var(--serif);font-weight:300;font-size:34px;color:var(--gold);line-height:1}
+.step h4{font-size:16px;font-weight:700;margin-bottom:2px}
+.step p{font-size:14px;color:var(--muted)}
+.form{background:linear-gradient(180deg,var(--cocoa2),var(--cocoa));border:1px solid var(--line);border-radius:26px;padding:clamp(24px,3.6vw,42px);box-shadow:0 40px 90px -40px rgba(0,0,0,.8)}
+.form h3{font-family:var(--serif);font-weight:400;font-size:30px;margin-bottom:4px}
+.form>p{color:var(--muted);font-size:14px;margin-bottom:26px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+.field>label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(244,234,217,.78)}
+.field>label i{font-style:normal;color:var(--gold)}
+.field input,.field select,.field textarea{width:100%;height:52px;border-radius:14px;border:1px solid rgba(244,234,217,.16);background:rgba(18,13,9,.55);padding:0 16px;font-size:16px;outline:none;transition:border-color .3s,box-shadow .3s;color-scheme:dark}
+.field textarea{height:96px;padding:14px 16px;resize:vertical}
+.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23dcae6f' stroke-width='1.6'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.field select option{background:#1c140e;color:var(--cream)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(220,174,111,.18)}
+.field.err input,.field.err select{border-color:#e07a5f}
+.field .msg{font-size:13px;color:#f0a58f;display:none}
+.field.err .msg{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;height:42px;padding:0 16px;border-radius:999px;border:1px solid rgba(244,234,217,.18);font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;user-select:none}
+.chip input:checked+span{background:var(--gold);border-color:var(--gold);color:#1a110a}
+.chip input:focus-visible+span{box-shadow:0 0 0 3px rgba(220,174,111,.35)}
+.form__send{margin-top:24px;width:100%;height:58px;font-size:16px}
+.form__foot{margin-top:14px;font-size:13px;color:var(--dim);text-align:center}
+.form__foot b{color:var(--muted);font-weight:600}
+@media(max-width:860px){.order__grid{grid-template-columns:1fr}}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}}
+
+/* gallery */
+.gallery{background:var(--cocoa);border-top:1px solid var(--line)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gal figure{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#2a1d13}
+.gal figure:nth-child(1){grid-row:span 2;aspect-ratio:auto}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.gal figure:hover img{transform:scale(1.05)}
+@media(max-width:860px){.gal{grid-template-columns:1fr 1fr}.gal figure:nth-child(1){grid-row:auto;grid-column:1/-1;aspect-ratio:4/3}.gal figure:nth-child(1) img{object-position:center 70%}}
+
+/* visit */
+.visit{background:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:flex;flex-direction:column;gap:14px;padding:30px;border-radius:var(--r);border:1px solid var(--line);background:rgba(244,234,217,.03);transition:border-color .4s,transform .5s var(--ease),background .4s;min-height:230px}
+.card:hover{border-color:rgba(220,174,111,.5);transform:translateY(-4px);background:rgba(244,234,217,.05)}
+.card__ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(220,174,111,.12);color:var(--gold)}
+.card__ic svg{width:22px;height:22px}
+.card small{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.card b{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15}
+.card p{color:var(--muted);font-size:14px;margin-top:auto;display:flex;align-items:center;gap:8px}
+.card p svg{width:16px;height:16px;transition:transform .4s var(--ease)}
+.card:hover p svg{transform:translateX(4px)}
+@media(max-width:860px){.cards{grid-template-columns:1fr}.card{min-height:0}}
+
+/* footer */
+.foot{background:#0d0906;border-top:1px solid var(--line);padding:72px 0 calc(40px + var(--safe-b))}
+.foot__top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;padding-bottom:44px;border-bottom:1px solid var(--line)}
+.foot__brand{display:flex;align-items:center;gap:18px}
+.foot__brand img{width:76px;height:76px;border-radius:50%}
+.foot__brand b{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:.04em;display:block;line-height:1}
+.foot__brand span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.foot__links{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.foot__links a:hover{color:var(--cream)}
+.foot__bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:26px;font-size:13px;color:var(--dim)}
+.foot__bot a{color:var(--muted)}
+.foot__bot a:hover{color:var(--gold)}
+@media(max-width:900px){.foot{padding-bottom:calc(110px + var(--safe-b))}}
+
+/* mobile dock */
+.dock{position:fixed;left:12px;right:12px;bottom:calc(12px + var(--safe-b));z-index:50;display:none;grid-template-columns:repeat(3,1fr);gap:6px;padding:6px;border-radius:22px;background:rgba(28,20,14,.86);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--line);box-shadow:0 20px 50px -10px rgba(0,0,0,.7);transform:translateY(140%);transition:transform .6s var(--ease)}
+.dock.show{transform:none}
+.dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:58px;border-radius:16px;font-size:12px;font-weight:600;color:var(--cream)}
+.dock a svg{width:20px;height:20px}
+.dock a.main{background:linear-gradient(135deg,#e7bb7c,#b98454 55%,#a06a3a);color:#1a110a}
+@media(max-width:900px){.dock{display:grid}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .rv,.fx,.item{opacity:1;transform:none}
+  .hero__title .ln>span{transform:none}
+  .marquee__track{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__box">
+    <img class="loader__logo" src="assets/img/logo.webp" alt="">
+    <div class="loader__mark"><span style="animation-delay:.15s">H</span><span style="animation-delay:.2s">O</span><span style="animation-delay:.25s">C</span><span style="animation-delay:.3s">A</span><span style="animation-delay:.35s">O</span><span style="animation-delay:.4s">Ğ</span><span style="animation-delay:.45s">L</span><span style="animation-delay:.5s">U</span></div>
+    <div class="loader__sub">Fırın · Pasta · Cafe</div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Hocaoğlu ana sayfa">
+      <img src="assets/img/logo.webp" alt="" width="44" height="44">
+      <span><span class="brand__word">Hocaoğlu</span><span class="brand__sub">Bakery &amp; Coffee</span></span>
+    </a>
+    <nav class="nav__links" aria-label="Ana menü">
+      <a href="#hikaye">Hikâye</a><a href="#vitrin">Vitrin</a><a href="#siparis">Pasta Siparişi</a><a href="#ziyaret">Ziyaret</a>
+    </nav>
+    <a class="btn btn--gold btn--sm nav__cta" href="#siparis">Sipariş Ver</a>
+    <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="drawer"><i></i></button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <a class="dl" href="#hikaye">Hikâye <small>01</small></a>
+  <a class="dl" href="#vitrin">Vitrin <small>02</small></a>
+  <a class="dl" href="#siparis">Pasta Siparişi <small>03</small></a>
+  <a class="dl" href="#ziyaret">Ziyaret <small>04</small></a>
+  <a class="btn btn--gold" href="tel:+905051740676"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ara · 0505 174 06 76</a>
+</div>
+
+<main>
+<section class="hero" id="top">
+  <div class="hero__media">
+    <div class="hero__fallback" aria-hidden="true"></div>
+    <video class="hero__bg" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.webp" aria-hidden="true">
+      <source src="assets/video/hocaoglu-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero__shade"></div>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow fx">Fırın · Pasta · Cafe — Est. 2020</p>
+      <h1 class="hero__title"><span class="ln"><span>Fırından yeni çıktı,</span></span><span class="ln"><span><em>kahveniz hazır.</em></span></span></h1>
+      <p class="hero__lead fx d1">Günlük taze pastalar, sıcak unlu mamüller, çeşit çeşit dondurma ve iyi bir kahve molası. Hepsi Hocaoğlu'nun çatısı altında.</p>
+      <div class="hero__cta fx d2">
+        <a class="btn btn--gold" href="#siparis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M5 16c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M12 12V8M12 5.5c.8-.8.8-1.7 0-2.5-.8.8-.8 1.7 0 2.5z"/></svg>Pasta Siparişi Ver</a>
+        <a class="btn btn--ghost" href="https://maps.app.goo.gl/37kvksPcn5jUXYKF9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Yol Tarifi</a>
+      </div>
+    </div>
+    <div class="hero__side fx d3">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="0 0 132 132"><defs><path id="circ" d="M66,66 m-54,0 a54,54 0 1,1 108,0 a54,54 0 1,1 -108,0"/></defs><text><textPath href="#circ">Fırından çıkmış lezzetler · Her gün taze ·</textPath></text></svg>
+        <img src="assets/img/logo.webp" alt="">
+      </div>
+      <a class="scroll-cue" href="#hikaye"><i></i>Keşfet</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Günlük taze pasta</span><span>Fırından sıcak poğaça</span><span>Türk kahvesi</span><span>Doğum günü pastası</span><span>Unlu mamüller</span><span>Çeşit çeşit dondurma</span><span>Bir kahve molası</span>
+    <span>Günlük taze pasta</span><span>Fırından sıcak poğaça</span><span>Türk kahvesi</span><span>Doğum günü pastası</span><span>Unlu mamüller</span><span>Çeşit çeşit dondurma</span><span>Bir kahve molası</span>
+  </div>
+</div>
+
+<section class="sec story" id="hikaye">
+  <div class="wrap">
+    <div class="story__grid">
+      <div>
+        <p class="eyebrow rv">Hikâyemiz</p>
+        <h2 class="story__quote rv d1" style="margin-top:22px">Sabah fırının ilk sıcaklığı, öğleden sonra bir dilim pasta, akşamüstü <em>bir kahve molası.</em></h2>
+      </div>
+      <div class="story__aside rv d2">
+        <p>Hocaoğlu, 2020'den beri fırını, pastanesi ve kafesiyle aynı çatı altında. Vitrine her gün taze ürünler giriyor; kahveniz de yanında hazır.</p>
+        <p>İster bir paket poğaça alıp geçin, ister oturup bir dilim pastayla kahvenizi için. Özel günleriniz için de pastanızı siparişle hazırlıyoruz.</p>
+        <div class="est"><img src="assets/img/logo.webp" alt="Hocaoğlu logosu"><div><b>Hocaoğlu</b><span>Est. 2020</span></div></div>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar rv">
+        <span class="pillar__n">01</span>
+        <div class="pillar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h18M5 20v-8a7 7 0 0 1 14 0v8"/><path d="M9 20v-4a3 3 0 0 1 6 0v4"/><path d="M12 3.5c.9 1 .9 2 0 3-.9-1-.9-2 0-3z"/></svg></div>
+        <h3>Fırın</h3>
+        <p>Poğaça, açma, simit ve börek. Gün boyu fırından sıcak çıkan unlu mamüller.</p>
+      </article>
+      <article class="pillar rv d1">
+        <span class="pillar__n">02</span>
+        <div class="pillar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h16M5 20v-6h14v6"/><path d="M5 14c1.4 1 2.8 1 4.2 0s2.8-1 4.2 0 2.8 1 4.2 0"/><path d="M7 14v-3h10v3"/><path d="M12 11V8"/><path d="M12 5.5c.7-.7.7-1.5 0-2.2-.7.7-.7 1.5 0 2.2z"/></svg></div>
+        <h3>Pasta</h3>
+        <p>Günlük yaş pastalar, dilim tatlılar, dondurma ve siparişle hazırlanan özel gün pastaları.</p>
+      </article>
+      <article class="pillar rv d2">
+        <span class="pillar__n">03</span>
+        <div class="pillar__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M3 21h14"/><path d="M8 3c-.8 1 .8 2 0 3M12 3c-.8 1 .8 2 0 3"/></svg></div>
+        <h3>Cafe</h3>
+        <p>Türk kahvesinden latteye, oturup dinlenmelik bir kahve molası.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="viral" aria-label="Instagram">
+  <div class="wrap viral__in">
+    <div class="viral__num rv">22<small>M+</small></div>
+    <div class="viral__txt rv d1">
+      <h3>Instagram'da bir videomuz 22 milyondan fazla izlendi.</h3>
+      <p>Videoda gördünüz, şimdi tadına bakma sırası sizde. Yeni ürünler ve günün vitrini için bizi takip edin.</p>
+    </div>
+    <a class="btn btn--ghost rv d2" href="https://www.instagram.com/hocaoglu.coffee.pasta/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>@hocaoglu.coffee.pasta</a>
+  </div>
+</section>
+
+<section class="sec show" id="vitrin">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <p class="eyebrow rv">Vitrin</p>
+        <h2 class="h2 rv d1">Bugün <em>vitrinde</em> neler var?</h2>
+      </div>
+      <p class="lead rv d2">Fırından, pastaneden, dondurma vitrininden ve kahve barından seçtiklerimiz. Ürünler gün içinde değişebilir. Günün vitrinini sormak için bir telefon yeter.</p>
+    </div>
+    <div class="board">
+      <div class="board__visual rv" id="boardVisual">
+        <div class="board__art"><img src="assets/img/logo.webp" alt=""></div>
+        <div class="board__cap"><span id="capKicker">Fırından</span><b id="capTitle">Taze pastalar</b></div>
+      </div>
+      <div>
+        <div class="tabs rv" role="tablist" aria-label="Ürün grupları" id="tabs"></div>
+        <div class="list" id="list" role="tabpanel"></div>
+        <p class="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Güncel fiyatlar ve günün ürünleri için <a href="tel:+905051740676">0505 174 06 76</a></span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec order" id="siparis">
+  <div class="wrap order__grid">
+    <div>
+      <p class="eyebrow rv">Pasta Siparişi</p>
+      <h2 class="h2 rv d1" style="margin-top:18px">Özel gününüzün <em>pastası.</em></h2>
+      <p class="lead rv d2" style="margin-top:22px">Doğum günü, nişan, kutlama… Pastanızı anlatın, biz hazırlayalım. Formu doldurun, siparişiniz doğrudan WhatsApp'ımıza gelsin.</p>
+      <div class="steps rv d3">
+        <div class="step"><b>1</b><div><h4>Formu doldurun</h4><p>Pasta türü, kişi sayısı ve teslim tarihi yeterli.</p></div></div>
+        <div class="step"><b>2</b><div><h4>WhatsApp'tan gönderin</h4><p>Bilgiler hazır mesaj olarak açılır, siz sadece gönderirsiniz.</p></div></div>
+        <div class="step"><b>3</b><div><h4>Gelin, teslim alın</h4><p>Detayları ve fiyatı WhatsApp'tan birlikte netleştiriyoruz.</p></div></div>
+      </div>
+    </div>
+
+    <form class="form rv d1" id="orderForm" novalidate>
+      <h3>Sipariş formu</h3>
+      <p>Yıldızlı alanlar zorunlu. Gönder'e bastığınızda WhatsApp açılır.</p>
+      <div class="fgrid">
+        <div class="field full" id="f-type">
+          <label>Pasta türü <i>*</i></label>
+          <div class="chips" role="radiogroup" aria-label="Pasta türü">
+            <label class="chip"><input type="radio" name="type" value="Doğum günü pastası" checked><span>Doğum günü</span></label>
+            <label class="chip"><input type="radio" name="type" value="Yaş pasta"><span>Yaş pasta</span></label>
+            <label class="chip"><input type="radio" name="type" value="Özel tasarım pasta"><span>Özel tasarım</span></label>
+            <label class="chip"><input type="radio" name="type" value="Nişan / söz pastası"><span>Nişan / söz</span></label>
+          </div>
+        </div>
+        <div class="field" id="f-name">
+          <label for="name">Adınız <i>*</i></label>
+          <input id="name" name="name" autocomplete="name" placeholder="Ad Soyad">
+          <span class="msg">Adınızı yazın.</span>
+        </div>
+        <div class="field" id="f-size">
+          <label for="size">Kişi sayısı</label>
+          <select id="size" name="size">
+            <option>4–6 kişilik</option><option selected>8–10 kişilik</option><option>12–15 kişilik</option><option>20 kişi ve üzeri</option>
+          </select>
+        </div>
+        <div class="field" id="f-date">
+          <label for="date">Teslim tarihi <i>*</i></label>
+          <input id="date" name="date" type="date">
+          <span class="msg">Teslim tarihini seçin.</span>
+        </div>
+        <div class="field" id="f-time">
+          <label for="time">Saat</label>
+          <select id="time" name="time">
+            <option value="">Fark etmez</option><option>Sabah</option><option>Öğlen</option><option>Akşamüstü</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="writing">Pastanın üzerine yazı</label>
+          <input id="writing" name="writing" maxlength="60" placeholder="Örn. İyi ki doğdun Elif!">
+        </div>
+        <div class="field full">
+          <label for="note">Notunuz</label>
+          <textarea id="note" name="note" maxlength="400" placeholder="Tat tercihi, renk, tema, alerji…"></textarea>
+        </div>
+      </div>
+      <a class="btn btn--gold form__send" id="sendWa" href="https://wa.me/905051740676" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp ile gönder</a>
+      <p class="form__foot">Siparişler <b>0505 174 06 76</b> numaralı WhatsApp hattına iletilir.</p>
+    </form>
+  </div>
+</section>
+
+<section class="sec gallery" id="galeri" hidden>
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <p class="eyebrow rv">Galeri</p>
+        <h2 class="h2 rv d1">Hocaoğlu'ndan <em>kareler.</em></h2>
+      </div>
+      <p class="lead rv d2">Dükkânımızdan ve vitrinlerimizden birkaç kare.</p>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<section class="sec visit" id="ziyaret">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <p class="eyebrow rv">Ziyaret</p>
+        <h2 class="h2 rv d1">Bir kahve molasına <em>uğrayın.</em></h2>
+      </div>
+      <p class="lead rv d2">Yol tarifi, telefon ya da Instagram. Size en kolay geleni seçin.</p>
+    </div>
+    <div class="cards">
+      <a class="card rv" href="https://maps.app.goo.gl/37kvksPcn5jUXYKF9" target="_blank" rel="noopener">
+        <span class="card__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+        <small>Konum</small><b>Haritada bizi bulun</b>
+        <p>Yol tarifi al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+      </a>
+      <a class="card rv d1" href="tel:+905051740676">
+        <span class="card__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+        <small>Telefon</small><b>0505 174 06 76</b>
+        <p>Hemen ara <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+      </a>
+      <a class="card rv d2" href="https://www.instagram.com/hocaoglu.coffee.pasta/" target="_blank" rel="noopener">
+        <span class="card__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></span>
+        <small>Instagram</small><b>@hocaoglu.coffee.pasta</b>
+        <p>Takip et <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div class="foot__brand"><img src="assets/img/logo.webp" alt="Hocaoğlu logosu"><div><b>Hocaoğlu</b><span>Fırın · Pasta · Cafe</span></div></div>
+      <nav class="foot__links" aria-label="Alt menü"><a href="#hikaye">Hikâye</a><a href="#vitrin">Vitrin</a><a href="#siparis">Pasta Siparişi</a><a href="#ziyaret">Ziyaret</a></nav>
+    </div>
+    <div class="foot__bot">
+      <span>© <span id="yr">2026</span> Hocaoğlu Bakery &amp; Coffee</span>
+      <span>Tasarım: <a href="https://wa.me/905446552099?text=Merhaba%2C%20web%20sitesi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">Aleyta Stüdyo</a></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="dock" id="dock" aria-label="Hızlı erişim">
+  <a href="tel:+905051740676"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ara</a>
+  <a class="main" href="#siparis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M5 16c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M12 12V8"/></svg>Pasta Siparişi</a>
+  <a href="https://maps.app.goo.gl/37kvksPcn5jUXYKF9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Yol Tarifi</a>
+</nav>
+
+<script>
+(function(){
+  var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+  var doc=document.documentElement;
+  var WA='905051740676';
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+
+  /* ---- content ---- */
+  var GALLERY=[
+    {src:'assets/img/g-1.webp',alt:'Hocaoğlu tabelası ve dış cephe'},
+    {src:'assets/img/g-2.webp',alt:'Dondurma vitrini'},
+    {src:'assets/img/g-3.webp',alt:'Dondurma kapları'},
+    {src:'assets/img/g-4.webp',alt:'Hocaoğlu iç mekân ve vitrin'},
+    {src:'assets/img/g-5.webp',alt:'Girişteki ışıklı vitrin'}
+  ];
+  var VITRIN=[
+    {id:'pasta',tab:'Pastalar',kicker:'Pastaneden',title:'Günlük pastalar',img:'assets/img/g-5.webp',items:[
+      ['Doğum Günü Pastası','İsim, yaş ve tema isteğinize göre siparişle hazırlanır.','Siparişle'],
+      ['Yaş Pasta','Çilekli, muzlu, çikolatalı. Vitrinde her gün taze.','Günlük'],
+      ['Özel Tasarım Pasta','Nişan, söz ve kutlamalar için kişiye özel süsleme.','Siparişle'],
+      ['Dilim Pasta','Kahvenizin yanına vitrinden günün dilimi.','Günlük']]},
+    {id:'firin',tab:'Fırın',kicker:'Fırından',title:'Sıcak unlu mamüller',img:'assets/img/hero-poster.webp',items:[
+      ['Poğaça','Peynirli, zeytinli ya da sade; sabah fırından sıcak.','Sıcak'],
+      ['Açma','Yumuşacık, tereyağlı. Kahvaltının vazgeçilmezi.','Sıcak'],
+      ['Simit','Çıtır kabuklu, bol susamlı.','Günlük'],
+      ['Börek','Günlük tepsi börekleri, dilim dilim.','Günlük']]},
+    {id:'dondurma',tab:'Dondurma',kicker:'Vitrinden',title:'Çeşit çeşit dondurma',img:'assets/img/v-dondurma.webp',items:[
+      ['Meyveli Dondurmalar','Rengârenk meyveli çeşitler, her gün vitrinde.','Günlük'],
+      ['Sütlü Çeşitler','Klasik sütlü ve kremalı dondurmalar.','Günlük'],
+      ['Külah ya da Kase','İstediğiniz çeşitten istediğiniz kadar top.','Al-götür']]},
+    {id:'tatli',tab:'Tatlılar',kicker:'Tatlı vitrini',title:'Tatlı molası',img:'assets/img/g-4.webp',items:[
+      ['Cheesecake','Kremamsı, hafif; meyve soslu ya da sade.','Günlük'],
+      ['Profiterol','Bol çikolata soslu klasik.','Günlük'],
+      ['Ekler','İnce hamur, hafif krema, parlak çikolata.','Günlük'],
+      ['Kurabiye Çeşitleri','Tuzlu ve tatlı, paket ya da kiloyla.','Paket']]},
+    {id:'kahve',tab:'Kahve',kicker:'Kahve barından',title:'Bir kahve molası',img:'assets/img/g-1.webp',items:[
+      ['Türk Kahvesi','Bol köpüklü, yanında lokumuyla.','Sıcak'],
+      ['Espresso & Americano','Yoğun, dengeli bir başlangıç.','Sıcak'],
+      ['Latte & Cappuccino','Sütlü kahveler, sıcak ya da buzlu.','Sıcak / Soğuk'],
+      ['Çay','Demlik çay, ince belli bardakta.','Sıcak']]}
+  ];
+
+  /* ---- loader ---- */
+  var loader=$('#loader'), started=Date.now();
+  function reveal(){ var wait=Math.max(0,1100-(Date.now()-started)); setTimeout(function(){ loader.classList.add('done'); doc.classList.add('ready'); setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); },1000); },wait); }
+  if(document.readyState==='complete') reveal(); else window.addEventListener('load',reveal);
+  setTimeout(function(){ if(!doc.classList.contains('ready')) reveal(); },2200);
+
+  /* ---- hero video ---- */
+  var hv=$('#heroVideo'), hero=$('.hero');
+  function tryPlay(v){ try{ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }catch(e){} }
+  function videoOn(){ hv.classList.add('on'); hero.classList.add('has-video'); }
+  hv.addEventListener('playing',videoOn); hv.addEventListener('loadeddata',videoOn); hv.addEventListener('timeupdate',function f(){ if(hv.currentTime>0){ videoOn(); hv.removeEventListener('timeupdate',f); } });
+  if(hv.readyState>=2) videoOn();
+  var src=hv.querySelector('source'); if(src) src.addEventListener('error',function(){ hv.style.display='none'; });
+  tryPlay(hv);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) tryPlay(hv); });
+
+  /* ---- nav, drawer, dock ---- */
+  var nav=$('#nav'), dock=$('#dock');
+  function onScroll(){ var y=window.scrollY||0; nav.classList.toggle('scrolled',y>40); dock.classList.toggle('show',y>hero.offsetHeight*.55); }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  var burger=$('#burger'), drawer=$('#drawer');
+  function setDrawer(open){ document.body.classList.toggle('menu-open',open); drawer.classList.toggle('open',open); burger.setAttribute('aria-expanded',open); drawer.setAttribute('aria-hidden',!open); burger.setAttribute('aria-label',open?'Menüyü kapat':'Menüyü aç'); }
+  burger.addEventListener('click',function(){ setDrawer(!drawer.classList.contains('open')); });
+  $$('a',drawer).forEach(function(a){ a.addEventListener('click',function(){ setDrawer(false); }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setDrawer(false); });
+
+  /* ---- reveal on scroll ---- */
+  function observe(els){
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){el.classList.add('in')}); return; }
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    els.forEach(function(el){ io.observe(el); });
+  }
+  observe($$('.rv'));
+
+  /* ---- vitrin ---- */
+  var tabs=$('#tabs'), list=$('#list'), capK=$('#capKicker'), capT=$('#capTitle'), vis=$('#boardVisual');
+  tabs.innerHTML=VITRIN.map(function(g,i){ return '<button class="tab" role="tab" id="tab-'+g.id+'" aria-selected="'+(i===0)+'" data-i="'+i+'">'+esc(g.tab)+'</button>'; }).join('');
+  function showGroup(i){
+    var g=VITRIN[i];
+    $$('.tab',tabs).forEach(function(b){ b.setAttribute('aria-selected',b.getAttribute('data-i')==String(i)); });
+    list.setAttribute('aria-labelledby','tab-'+g.id);
+    list.innerHTML=g.items.map(function(it,k){ return '<div class="item" style="animation-delay:'+(k*70)+'ms"><h4>'+esc(it[0])+'</h4><span class="tag">'+esc(it[2])+'</span><p>'+esc(it[1])+'</p></div>'; }).join('');
+    capK.textContent=g.kicker; capT.textContent=g.title;
+    var old=vis.querySelector('img.photo'); if(old) old.parentNode.removeChild(old);
+    if(g.img){ var im=new Image(); im.className='photo'; im.alt=g.title; im.src=g.img; im.loading='lazy'; vis.insertBefore(im,vis.querySelector('.board__cap')); }
+  }
+  tabs.addEventListener('click',function(e){ var b=e.target.closest('.tab'); if(b) showGroup(+b.getAttribute('data-i')); });
+  tabs.addEventListener('keydown',function(e){ var bs=$$('.tab',tabs), cur=bs.indexOf(document.activeElement); if(cur<0) return; var n=e.key==='ArrowRight'?cur+1:e.key==='ArrowLeft'?cur-1:null; if(n===null) return; n=(n+bs.length)%bs.length; bs[n].focus(); showGroup(n); e.preventDefault(); });
+  showGroup(0);
+
+  /* ---- gallery ---- */
+  if(GALLERY.length){
+    $('#gal').innerHTML=GALLERY.map(function(g){ return '<figure class="rv"><img src="'+esc(g.src)+'" alt="'+esc(g.alt)+'" loading="lazy"></figure>'; }).join('');
+    $('#galeri').hidden=false; observe($$('#gal .rv'));
+  }
+
+  /* ---- order form -> WhatsApp ---- */
+  var form=$('#orderForm'), send=$('#sendWa'), date=$('#date');
+  var t=new Date(); var iso=function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  date.min=iso(t);
+  function fmtDate(v){ if(!v) return ''; var p=v.split('-'); var d=new Date(+p[0],+p[1]-1,+p[2]); try{ return d.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric',weekday:'long'}); }catch(e){ return p[2]+'.'+p[1]+'.'+p[0]; } }
+  function val(n){ var el=form.elements[n]; if(!el) return ''; if(el.length&&!el.tagName){ for(var i=0;i<el.length;i++) if(el[i].checked) return el[i].value; return ''; } return (el.value||'').trim(); }
+  function build(){
+    var lines=['Merhaba Hocaoğlu, pasta siparişi vermek istiyorum.',''];
+    lines.push('• Pasta: '+val('type'));
+    lines.push('• Kişi sayısı: '+val('size'));
+    if(val('date')) lines.push('• Teslim: '+fmtDate(val('date'))+(val('time')?' ('+val('time')+')':''));
+    if(val('writing')) lines.push('• Üzerine yazı: "'+val('writing')+'"');
+    if(val('note')) lines.push('• Not: '+val('note'));
+    if(val('name')) lines.push('','Ad: '+val('name'));
+    return 'https://wa.me/'+WA+'?text='+encodeURIComponent(lines.join('\n'));
+  }
+  function update(){ send.href=build(); }
+  function check(){
+    var ok=true;
+    [['name','f-name'],['date','f-date']].forEach(function(p){ var bad=!val(p[0]); $('#'+p[1]).classList.toggle('err',bad); if(bad&&ok){ ok=false; var el=form.elements[p[0]]; try{ el.focus({preventScroll:true}); }catch(e){ el.focus(); } $('#'+p[1]).scrollIntoView({behavior:'smooth',block:'center'}); } });
+    return ok;
+  }
+  form.addEventListener('input',function(e){ update(); var f=e.target.closest('.field'); if(f&&f.classList.contains('err')&&e.target.value) f.classList.remove('err'); });
+  form.addEventListener('change',update);
+  form.addEventListener('submit',function(e){ e.preventDefault(); if(check()){ update(); send.click(); } });
+  send.addEventListener('click',function(e){ if(!check()){ e.preventDefault(); return; } update(); });
+  update();
+
+  $('#yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
